@@ -20,6 +20,9 @@ jobs:
       - name: Install requests
         run: pip install requests
 
+      - name: Install python-dotenv
+        run: pip install python-dotenv
+
       - name: Run script
         env:
           LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
