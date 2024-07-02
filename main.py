@@ -1,5 +1,13 @@
+import os
+from dotenv import load_dotenv
 import requests
 from datetime import datetime, timedelta
+
+# .env ファイルから環境変数を読み込む
+load_dotenv()
+
+# 環境変数から LINE Notify トークンを取得する
+line_notify_token = os.getenv("LINE_NOTIFY_TOKEN")
 
 # Calculate the date two months from today
 two_months_from_now = datetime.now() + timedelta(days=60)
@@ -38,9 +46,6 @@ payload_template = {
     "rrc3005ProcessingType": "update",
 }
 
-# LineNotify token
-line_notify_token = "XXXXXX"
-
 # Function to send notification
 def send_line_notify(message):
     url = "https://notify-api.line.me/api/notify"
@@ -73,9 +78,7 @@ def check_hotel_availability():
             continue
         
         # 空き状況の確認
-        # print(response.text)
         if "remainStockNum" in response.text:
-            print("hotel_name", hotel_name)
             message = f"{hotel_name} ({formatted_date}) に空きがあります！"
             send_line_notify(message)
             print(message)
