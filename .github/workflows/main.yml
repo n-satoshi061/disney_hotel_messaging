@@ -1,0 +1,26 @@
+name: Check Disney Hotel Availability
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  check_hotel_availability:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run script
+        env:
+          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
+        run: python check_hotel_availability.py
