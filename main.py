@@ -76,13 +76,11 @@ def check_hotel_availability():
         # print(response.text)
         if "remainStockNum" in response.text:
             print("hotel_name", hotel_name)
-            print(response_json.get("planInfo", []))
             message = f"{hotel_name} ({formatted_date}) に空きがあります！"
             send_line_notify(message)
             print(message)
         else:
             message = f"{hotel_name} ({formatted_date}) に空きがありません。"
-            send_line_notify(message)
             print(message)
 
 if __name__ == "__main__":
