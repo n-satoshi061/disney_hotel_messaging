@@ -2,7 +2,7 @@ name: Check Disney Hotel Availability
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # UTCの12時はJSTの21時
+    - cron: '0 12 * * *'  # UTCの21時に実行
 
 jobs:
   check_hotel_availability:
@@ -17,10 +17,17 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
-          pip install requests
-          pip install python-dotenv
+          pip install requests python-dotenv
 
       - name: Run script
         env:
